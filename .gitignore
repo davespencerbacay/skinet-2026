@@ -1,0 +1,107 @@
+# =========================
+# .NET / C# Build Artifacts
+# =========================
+
+bin/
+obj/
+
+# =========================
+# Visual Studio
+# =========================
+
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# =========================
+# Visual Studio Code
+# =========================
+
+.vscode/
+
+# =========================
+# Rider / JetBrains
+# =========================
+
+.idea/
+*.sln.iml
+
+# =========================
+# NuGet
+# =========================
+
+*.nupkg
+*.snupkg
+packages/
+
+# NuGet generated files
+project.lock.json
+project.fragment.lock.json
+
+# =========================
+# ASP.NET / Development
+# =========================
+
+appsettings.Development.json
+appsettings.Local.json
+
+# =========================
+# Logs
+# =========================
+
+*.log
+logs/
+
+# =========================
+# Environment / Secrets
+# =========================
+
+.env
+.env.*
+!.env.example
+
+# =========================
+# OS Generated Files
+# =========================
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# =========================
+# Test Results
+# =========================
+
+TestResults/
+*.trx
+
+# =========================
+# Coverage
+# =========================
+
+coverage/
+coverage.opencover.xml
+coverage.cobertura.xml
+
+# =========================
+# Publish Output
+# =========================
+
+publish/
+*.publishsettings
+
+# =========================
+# Azure
+# =========================
+
+.azure/
+
+# =========================
+# Temporary Files
+# =========================
+
+*.tmp
+*.temp
+*.bak
