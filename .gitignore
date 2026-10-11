@@ -103,3 +103,4 @@ desktop.ini
 *.tmp
 *.temp
 *.bak
+server/API/appsettings.json
