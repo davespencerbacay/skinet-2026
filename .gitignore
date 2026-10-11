@@ -2,8 +2,8 @@
 # .NET / C# Build Artifacts
 # =========================
 
-bin/
-obj/
+**/bin/
+**/obj/
 
 # =========================
 # Visual Studio
@@ -35,8 +35,6 @@ obj/
 *.nupkg
 *.snupkg
 packages/
-
-# NuGet generated files
 project.lock.json
 project.fragment.lock.json
 
@@ -48,13 +46,6 @@ appsettings.Development.json
 appsettings.Local.json
 
 # =========================
-# Logs
-# =========================
-
-*.log
-logs/
-
-# =========================
 # Environment / Secrets
 # =========================
 
@@ -63,12 +54,11 @@ logs/
 !.env.example
 
 # =========================
-# OS Generated Files
+# Logs
 # =========================
 
-.DS_Store
-Thumbs.db
-desktop.ini
+*.log
+logs/
 
 # =========================
 # Test Results
@@ -97,6 +87,14 @@ publish/
 # =========================
 
 .azure/
+
+# =========================
+# OS Generated Files
+# =========================
+
+.DS_Store
+Thumbs.db
+desktop.ini
 
 # =========================
 # Temporary Files
