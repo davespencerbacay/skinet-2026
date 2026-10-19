@@ -1,3 +1,4 @@
+import { TestErrorComponent } from './features/test-error/test-error.component';
 import { Routes } from '@angular/router';
 import { HomeComponent } from './features/home/home.component';
 import { ShopComponent } from './features/shop/shop.component';
@@ -15,6 +16,10 @@ export const routes: Routes = [
   {
     path: "shop/:id",
     component: ProductDetailsComponent
+  },
+  {
+    path: "test-error",
+    component: TestErrorComponent
   },
   {
     path: "**",
