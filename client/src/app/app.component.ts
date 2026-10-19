@@ -4,7 +4,7 @@ import { ShopComponent } from './features/shop/shop.component';
 import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-root',
-  imports: [HeaderComponent, ShopComponent, RouterOutlet],
+  imports: [HeaderComponent, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
