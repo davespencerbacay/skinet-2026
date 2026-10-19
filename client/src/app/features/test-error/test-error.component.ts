@@ -38,9 +38,20 @@ export class TestErrorComponent {
     })
   }
   getValidation400Error() {
+    this.validationErrors = undefined;
+
     this.http.post(this.baseUrl + "buggy/validationerror", {}).subscribe({
       next: response => console.log(response),
-      error: error => this.validationErrors = error
+      error: error => {
+        if (Array.isArray(error)) {
+          this.validationErrors = error;
+          return;
+        }
+
+        this.validationErrors = error?.error?.errors
+          ? Object.values(error.error.errors).flat() as string[]
+          : ['Validation failed'];
+      }
     })
   }
 }
