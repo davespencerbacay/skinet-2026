@@ -2,7 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Address, User } from '../../shared/models/user';
-import { map } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -16,25 +16,33 @@ export class AccountService {
     let params = new HttpParams();
     params = params.append("useCookies", true);
     return this.http.post<User>(this.baseUrl + "login", values, {
-      params,
-      withCredentials: true
+      params
     })
   }
   register(values: any) {
     return this.http.post(this.baseUrl + "account/register", values);
   }
+
+  getAuthState() {
+    return this.http.get<{ isAuthenticated: boolean }>(this.baseUrl + "account");
+  }
+
   getUserInfo() {
-    return this.http.get<User>(this.baseUrl + "account/user-info", { withCredentials: true }).pipe(
+    return this.http.get<User>(this.baseUrl + "account/user-info").pipe(
       map(user => {
         this.currentUser.set(user);
         return user;
+      }),
+      catchError(() => {
+        this.currentUser.set(null);
+        return of(null);
       })
     )
   }
   logout() {
-    return this.http.post(this.baseUrl + "account/logout", {}, { withCredentials: true });
+    return this.http.post(this.baseUrl + "account/logout", {});
   }
   updateAddress(address: Address) {
-    return this.http.post(this.baseUrl + "account/address", address, { withCredentials: true });
+    return this.http.post(this.baseUrl + "account/address", address);
   }
 }
