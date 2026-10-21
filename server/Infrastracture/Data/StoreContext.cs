@@ -9,6 +9,7 @@ namespace Infrastracture.Data
     {
         public DbSet<Product> Products { get; set; }
         public DbSet<Address> Addreses { get; set; }
+        public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
