@@ -6,17 +6,25 @@ import { MatAnchor, MatButton } from '@angular/material/button';
 import { StripService } from '../../core/services/strip.service';
 import { StripeAddressElement } from '@stripe/stripe-js';
 import { SnackbarService } from '../../core/services/snackbar.service';
+import { MatCheckboxChange, MatCheckboxModule } from "@angular/material/checkbox";
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { Address } from '../../shared/models/user';
+import { firstValueFrom } from 'rxjs';
+import { AccountService } from '../../core/services/account.service';
+import { CheckoutDeliveryComponent } from './checkout-delivery/checkout-delivery.component';
 
 @Component({
   selector: 'app-checkout',
-  imports: [OrderSummaryComponent, MatStepperModule, RouterLink, MatAnchor, MatButton, RouterLink],
+  imports: [OrderSummaryComponent, MatStepperModule, RouterLink, MatAnchor, MatButton, RouterLink, MatCheckboxModule, CheckoutDeliveryComponent],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.css',
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
   private stripeService = inject(StripService);
   private snackbar = inject(SnackbarService)
+  private accountService = inject(AccountService);
   addressElement?: StripeAddressElement;
+  saveAddress = false;
 
   async ngOnInit() {
     try {
@@ -29,5 +37,40 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.stripeService.disposeElements();
+  }
+
+  onSaveAddressCheckboxChange(event: MatCheckboxChange) {
+    this.saveAddress = event.checked;
+  }
+
+  async onStepChange(event: StepperSelectionEvent) {
+    if (event.selectedIndex === 1) {
+      if (this.saveAddress) {
+        const address = await this.getAddressFromStripeAddress();
+        address && firstValueFrom(this.accountService.updateAddress(address));
+      }
+    }
+
+    if (event.selectedIndex === 2) {
+      await firstValueFrom(this.stripeService.createOrUpdatePaymentIntent());
+    }
+  }
+
+  private async getAddressFromStripeAddress(): Promise<Address | null> {
+    const result = await this.addressElement?.getValue();
+    const address = result?.value.address;
+
+    if (address) {
+      return {
+        line1: address.line1,
+        line2: address.line2 || undefined,
+        city: address.city,
+        country: address.country,
+        postalCode: address.postal_code,
+        state: address.state,
+      }
+    } else {
+      return null;
+    }
   }
 }
