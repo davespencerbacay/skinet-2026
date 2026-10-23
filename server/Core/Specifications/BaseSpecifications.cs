@@ -19,6 +19,9 @@ namespace Core.Specifications
         public int Skip { get; private set; }
 
         public bool IsPagingEnabled { get; private set; }
+        public List<Expression<Func<T, object>>> Includes { get; set; } = [];
+
+        public List<string> IncludeStrings { get; } = [];
 
         public IQueryable<T> ApplyCriteria(IQueryable<T> query)
         {
@@ -29,6 +32,14 @@ namespace Core.Specifications
             return query;
         }
 
+        protected void AddInclude(Expression<Func<T, object>> includeExpression)
+        {
+            Includes.Add(includeExpression);
+        }
+        protected void AddInclude(string includeString)
+        {
+            IncludeStrings.Add(includeString);
+        }
         protected void AddOrderBy(Expression<Func<T, object>> orderByExpression)
         {
             OrderBy = orderByExpression;
