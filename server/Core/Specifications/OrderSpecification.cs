@@ -6,12 +6,15 @@ namespace Core.Specifications
     {
         public OrderSpecification(string email) : base(x => x.BuyerEmail == email)
         {
-
+            AddInclude("OrderItems");
+            AddInclude("DeliveryMethod");
+            AddOrderByDescending(x => x.OrderDate);
         }
 
         public OrderSpecification(string email, int id) : base(x => x.BuyerEmail == email && x.Id == id)
         {
-
+            AddInclude("OrderItems");
+            AddInclude("DeliveryMethod");
         }
     }
 }
