@@ -1,12 +1,13 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { ConfirmationToken } from '@stripe/stripe-js';
+import { ShippingAddress } from '../models/order';
 
 @Pipe({
   name: 'address',
 })
 export class AddressPipe implements PipeTransform {
-  transform(value?: ConfirmationToken["shipping"], ...args: unknown[]): unknown {
-    if (value?.address && value.name) {
+  transform(value?: ConfirmationToken["shipping"] | ShippingAddress, ...args: unknown[]): unknown {
+    if (value && "address" in value && value.name) {
       const {
         line1,
         city,
@@ -14,9 +15,20 @@ export class AddressPipe implements PipeTransform {
         line2,
         postal_code,
         state
-      } = value.address
+      } = (value as ConfirmationToken["shipping"])?.address!;
       return `${value.name}, ${line1}${line2 ? ', ' + line2 : ''} ${city}, ${state}, ${postal_code} ${country}`
-    } else {
+    } else if (value && 'line1' in value) {
+      const {
+        line1,
+        city,
+        country,
+        line2,
+        postalCode,
+        state
+      } = value as ShippingAddress;
+      return `${value.name}, ${line1}${line2 ? ', ' + line2 : ''} ${city}, ${state}, ${postalCode} ${country}`
+    }
+    else {
       return "Unknown Address"
     }
   }
