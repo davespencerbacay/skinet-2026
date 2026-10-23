@@ -1,4 +1,4 @@
-import { loadStripe, Stripe, StripeAddressElement, StripeAddressElementOptions, StripeElements, StripePaymentElement } from '@stripe/stripe-js';
+import { ConfirmationToken, loadStripe, Stripe, StripeAddressElement, StripeAddressElementOptions, StripeElements, StripePaymentElement } from '@stripe/stripe-js';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -10,7 +10,7 @@ import { AccountService } from './account.service';
 @Injectable({
   providedIn: 'root',
 })
-export class StripService {
+export class StripeService {
   baseUrl = environment.apiUrl;
   private cartService = inject(CartService);
   private accountService = inject(AccountService)
@@ -101,6 +101,49 @@ export class StripService {
         return cart;
       })
     );
+  }
+
+  async createConfirmationToken() {
+    const stripe = await this.getStripeInstance();
+    const elements = await this.initializeElements();
+    const result = await elements.submit();
+
+    if (result.error) {
+      throw new Error(result.error.message);
+    }
+
+    if (stripe) {
+      return await stripe.createConfirmationToken({ elements })
+    } else {
+      throw new Error("Stripe error occured.");
+    }
+  }
+
+  async confirmPayment(confirmationToken: ConfirmationToken) {
+    const stripe = await this.getStripeInstance();
+    const elements = await this.initializeElements();
+    const result = await elements.submit();
+
+    if (result.error) {
+      throw new Error(result.error.message);
+    }
+
+    const clientSecret = this.cartService.cart()?.clientSecret;
+
+    if (stripe && clientSecret) {
+      return await stripe?.confirmPayment(
+        {
+          clientSecret: clientSecret,
+          confirmParams: {
+            confirmation_token: confirmationToken.id,
+
+          },
+          redirect: "if_required"
+        }
+      )
+    } else {
+      throw new Error("Unable to load stripe.")
+    }
   }
 
   disposeElements() {

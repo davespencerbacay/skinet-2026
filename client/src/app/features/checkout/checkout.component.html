@@ -29,10 +29,17 @@
         </div>
       </mat-step>
       <mat-step label="Review">
-        <app-checkout-review></app-checkout-review>
+        <app-checkout-review [confirmationToken]="confirmationToken"></app-checkout-review>
         <div class="flex justify-between mt-6">
           <button matStepperPrevious mat-stroked-button>Back</button>
-          <button matStepperNext mat-flat-button>Pay {{cartService.totals()?.total | currency}}</button>
+          <button matStepperNext mat-flat-button (click)="confirmPayment(stepper)"
+            [disabled]="!confirmPayment || loading">
+            @if(loading) {
+            <mat-progress-spinner diameter="20"></mat-progress-spinner>
+            } @else {
+            <span>Pay {{cartService.totals()?.total | currency}}</span>
+            }
+          </button>
         </div>
       </mat-step>
     </mat-stepper>
