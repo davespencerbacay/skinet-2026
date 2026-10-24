@@ -1,1 +1,138 @@
-<p>home works!</p>
+<div class="relative min-h-[85vh] overflow-hidden rounded-2xl bg-slate-950 text-white">
+
+  <!-- Background image -->
+  <img src="../images/hero1.jpg" alt="Snow-covered alpine ski resort"
+    class="absolute inset-0 h-full w-full object-cover" />
+
+  <!-- Dark overlay -->
+  <div class="absolute inset-0 bg-linear-to-r from-slate-950/90 via-slate-900/60 to-slate-900/10"></div>
+
+  <!-- Hero content -->
+  <div class="relative z-10 flex min-h-[85vh] flex-col">
+
+    <!-- Navigation -->
+    <nav class="flex items-center justify-between border-b border-white/20 px-6 py-5 sm:px-10 lg:px-16">
+      <a routerLink="/" class="text-2xl font-extrabold tracking-tight sm:text-3xl">
+        <span class="text-cyan-400">▲</span> SkiNet
+      </a>
+
+      <div class="hidden items-center gap-8 md:flex">
+        <a routerLink="/" class="border-b-2 border-cyan-400 pb-1 font-medium">Home</a>
+        <a routerLink="/shop" class="text-white/80 transition hover:text-cyan-300">Shop</a>
+        <a routerLink="/about" class="text-white/80 transition hover:text-cyan-300">About</a>
+        <a routerLink="/contact" class="text-white/80 transition hover:text-cyan-300">Contact</a>
+      </div>
+
+      <a routerLink="/basket" aria-label="Shopping basket"
+        class="rounded-full border border-white/30 p-3 transition hover:bg-white/10">
+        <mat-icon>shopping_bag</mat-icon>
+      </a>
+    </nav>
+
+    <!-- Hero section -->
+    <div class="flex flex-1 items-center px-6 py-16 sm:px-10 lg:px-16">
+      <div class="max-w-3xl">
+
+        <p class="mb-5 text-sm font-bold uppercase tracking-[0.3em] text-cyan-300">
+          Gear up for the mountains
+        </p>
+
+        <h1 class="text-5xl font-extrabold leading-tight tracking-tight sm:text-6xl lg:text-7xl">
+          Find Your Next
+          <span class="block text-cyan-300">Adventure.</span>
+        </h1>
+
+        <p class="mt-6 max-w-xl text-lg leading-8 text-slate-200 sm:text-xl">
+          Premium ski gear for every slope, every season,
+          and every kind of skier.
+        </p>
+
+        <!-- Actions -->
+        <div class="mt-9 flex flex-col gap-4 sm:flex-row sm:items-center">
+          <a routerLink="/shop"
+            class="inline-flex items-center justify-center gap-3 rounded-xl bg-linear-to-r from-blue-600 to-cyan-500 px-8 py-4 text-lg font-bold text-white shadow-lg shadow-cyan-950/30 transition hover:-translate-y-1 hover:from-blue-500 hover:to-cyan-400">
+            Explore Ski Gear
+            <mat-icon>arrow_forward</mat-icon>
+          </a>
+
+          <a routerLink="/about"
+            class="inline-flex items-center justify-center rounded-lg px-5 py-4 font-semibold text-white underline decoration-cyan-400 underline-offset-8 transition hover:text-cyan-300">
+            Discover SkiNet
+          </a>
+        </div>
+
+        <!-- Trust indicators -->
+        <div class="mt-14 flex flex-wrap gap-x-8 gap-y-4 text-sm text-slate-200">
+          <div class="flex items-center gap-3">
+            <mat-icon class="text-cyan-300">landscape</mat-icon>
+            <span>Built for the slopes</span>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <mat-icon class="text-cyan-300">verified_user</mat-icon>
+            <span>Quality you can trust</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Featured categories -->
+<section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
+  <div class="mb-8 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+    <div>
+      <p class="font-semibold uppercase tracking-widest text-cyan-700">
+        Find your fit
+      </p>
+      <h2 class="mt-2 text-3xl font-extrabold text-slate-900">
+        Explore Our Collection
+      </h2>
+      <p class="mt-2 text-slate-600">
+        Everything you need for your next mountain adventure.
+      </p>
+    </div>
+
+    <a routerLink="/shop" class="font-semibold text-blue-700 transition hover:text-cyan-600">
+      View all products →
+    </a>
+  </div>
+
+  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+    <a routerLink="/shop" [queryParams]="{category: 'skiing'}"
+      class="group relative flex min-h-64 items-end overflow-hidden rounded-2xl bg-slate-800 p-6 text-white">
+      <img src="../images/hero1.jpg" alt="Skiing equipment collection"
+        class="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105" />
+      <div class="absolute inset-0 bg-linear-to-t from-slate-950/90 to-transparent"></div>
+      <div class="relative">
+        <h3 class="text-2xl font-bold">Ski Essentials</h3>
+        <p class="mt-2 text-sm text-slate-200">Gear up for the slopes</p>
+      </div>
+    </a>
+
+    <a routerLink="/shop" [queryParams]="{category: 'clothing'}"
+      class="group relative flex min-h-64 items-end overflow-hidden rounded-2xl bg-slate-800 p-6 text-white">
+      <img src="../images/hero1.jpg" alt="Winter clothing collection"
+        class="absolute inset-0 h-full w-full object-cover object-right transition duration-500 group-hover:scale-105" />
+      <div class="absolute inset-0 bg-linear-to-t from-slate-950/90 to-transparent"></div>
+      <div class="relative">
+        <h3 class="text-2xl font-bold">Winter Apparel</h3>
+        <p class="mt-2 text-sm text-slate-200">Stay warm. Move freely.</p>
+      </div>
+    </a>
+
+    <a routerLink="/shop" [queryParams]="{category: 'accessories'}"
+      class="group relative flex min-h-64 items-end overflow-hidden rounded-2xl bg-slate-800 p-6 text-white sm:col-span-2 lg:col-span-1">
+      <img src="../images/hero1.jpg" alt="Winter sports accessories"
+        class="absolute inset-0 h-full w-full object-cover object-center transition duration-500 group-hover:scale-105" />
+      <div class="absolute inset-0 bg-linear-to-t from-slate-950/90 to-transparent"></div>
+      <div class="relative">
+        <h3 class="text-2xl font-bold">Accessories</h3>
+        <p class="mt-2 text-sm text-slate-200">The finishing touches</p>
+      </div>
+    </a>
+
+  </div>
+</section>
