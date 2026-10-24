@@ -3,6 +3,7 @@ import { environment } from '../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Address, User } from '../../shared/models/user';
 import { catchError, map, of, tap } from 'rxjs';
+import { SignalrService } from './signalr.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,6 +11,7 @@ import { catchError, map, of, tap } from 'rxjs';
 export class AccountService {
   baseUrl = environment.apiUrl;
   private http = inject(HttpClient);
+  private signalRService = inject(SignalrService);
   currentUser = signal<User | null>(null);
 
   login(values: any) {
@@ -17,7 +19,9 @@ export class AccountService {
     params = params.append("useCookies", true);
     return this.http.post<User>(this.baseUrl + "login", values, {
       params
-    })
+    }).pipe(
+      tap(() => this.signalRService.createHubConnection())
+    )
   }
   register(values: any) {
     return this.http.post(this.baseUrl + "account/register", values);
@@ -40,7 +44,9 @@ export class AccountService {
     )
   }
   logout() {
-    return this.http.post(this.baseUrl + "account/logout", {});
+    return this.http.post(this.baseUrl + "account/logout", {}).pipe(
+      tap(() => this.signalRService.stopHubConnection())
+    );
   }
   updateAddress(address: Address) {
     return this.http.post(this.baseUrl + "account/address", address).pipe(
