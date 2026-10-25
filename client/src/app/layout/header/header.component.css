@@ -1,18 +1,25 @@
-.custom-badge .mat-badge-content
-{
-  width: 24px;
-  height: 24px;
-  font-size: 14px;
-  line-height: 24px;
+
+/* Desktop active navigation */
+nav a.active,
+nav a.mobile-active {
+  color: #4f46e5;
+  background-color: #eef2ff;
 }
 
-.custom-badge .mat-icon
-{
-  font-size: 32px;
-  width: 32px;
-  height: 32px;
+/* Keep desktop active links clean */
+@media (min-width: 768px) {
+  nav a.active {
+    background-color: transparent;
+  }
 }
 
-a.active {
-  color: #7d00fa;
+/* Active shopping cart */
+a.cart-active {
+  color: #4f46e5;
+  background-color: #eef2ff;
+}
+
+/* Cart badge */
+.custom-badge .mat-badge-content {
+  font-weight: 600;
 }
